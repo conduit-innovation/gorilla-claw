@@ -4,7 +4,7 @@ namespace MonkeyHook\Test;
 
 use PHPUnit\Framework\TestCase;
 use MonkeyHook\Hook;
-use function MonkeyHook\find_hooks;
+use function MonkeyHook\find_filters;
 
 final class HookTest extends TestCase {
     protected function setUp(): void {
@@ -23,7 +23,7 @@ final class HookTest extends TestCase {
     public function testHookReplace() {
         add_filter('hook_name', [$this, 'some_func'], 10);
 
-        $hook = find_hooks('hook_name');
+        $hook = find_filters('hook_name');
 
         $this->assertCount(1, $hook);
 

@@ -5,7 +5,7 @@ namespace MonkeyHook\Test;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function MonkeyHook\find_hooks;
+use function MonkeyHook\find_filters;
 
 final class APITest extends TestCase {
 
@@ -30,32 +30,32 @@ final class APITest extends TestCase {
     }
 
     public function testFindHookBasic() {
-        $hook = find_hooks('make_uppercase');
+        $hook = find_filters('make_uppercase');
         $this->assertSame('make_uppercase', $hook[0]->hook_name);
 
-        $hook = find_hooks('make_uppercase make_lowercase');
+        $hook = find_filters('make_uppercase make_lowercase');
         $this->assertSame('make_uppercase', $hook[0]->hook_name);
 
-        $hook = find_hooks(['make_uppercase', 'make_lowercase']);
+        $hook = find_filters(['make_uppercase', 'make_lowercase']);
     }
 
     public function testFindHookByFunctionName() {
-        $hook = find_hooks('make_uppercase', 'basic_global_make_uppercase');
+        $hook = find_filters('make_uppercase', 'basic_global_make_uppercase');
         $this->assertSame('make_uppercase', $hook[0]->hook_name);
     }
 
     public function testFindHookByClosure() {
-        $hook = find_hooks('make_uppercase', $this->test_closure);
+        $hook = find_filters('make_uppercase', $this->test_closure);
         $this->assertSame('make_uppercase', $hook[0]->hook_name);
     }
 
     public function testFindHookByObjectMethod() {
-        $hook = find_hooks('make_uppercase', ['stdClass', 'make_uppercase_function']);
+        $hook = find_filters('make_uppercase', ['stdClass', 'make_uppercase_function']);
         $this->assertSame('make_uppercase', $hook[0]->hook_name);
     }
 
     public function testFindHookNotFound() {
-        $hook = find_hooks('make_uppercase', ['stdClass', 'make_uppercase_function']);
+        $hook = find_filters('make_uppercase', ['stdClass', 'make_uppercase_function']);
         $this->assertSame('make_uppercase', $hook[0]->hook_name);
     }
 }
