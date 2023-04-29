@@ -2,7 +2,7 @@
 
 namespace MonkeyHook\Mock;
 
-class MockStaticClass {
+class MockClass {
 
     public static $static_prop = 'static';
 

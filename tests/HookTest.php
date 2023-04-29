@@ -7,7 +7,7 @@ use MonkeyHook\Hook;
 use function MonkeyHook\find_filters;
 use stdClass;
 
-use MonkeyHook\Mock\MockStaticClass;
+use MonkeyHook\Mock\MockClass;
 
 final class HookTest extends TestCase {
 
@@ -18,8 +18,8 @@ final class HookTest extends TestCase {
         $this->test_closure = function($input){ return $input; };
 
         add_filter('make_uppercase', $this->test_closure);
-        add_filter('make_uppercase', ['MonkeyHook\Mock\MockStaticClass', 'make_uppercase_static']);
-        MockStaticClass::register_with_static('make_uppercase');
+        add_filter('make_uppercase', ['MonkeyHook\Mock\MockClass', 'make_uppercase_static']);
+        MockClass::register_with_static('make_uppercase');
     }
 
     protected function tearDown(): void {
@@ -48,13 +48,13 @@ final class HookTest extends TestCase {
     }
 
     public function testHookReplaceStatic() {
-        $hook = find_filters('make_uppercase', ['MonkeyHook\Mock\MockStaticClass', 'make_uppercase_static']);
+        $hook = find_filters('make_uppercase', ['MonkeyHook\Mock\MockClass', 'make_uppercase_static']);
         
         $hook->replace(function($input) {
-            return MockStaticClass::$static_prop;
+            return MockClass::$static_prop;
         });
 
-        $this->assertSame('MonkeyHook\Mock\MockStaticClass', $hook[0]->that);
+        $this->assertSame('MonkeyHook\Mock\MockClass', $hook[0]->that);
 
         $this->assertSame('static', apply_filters('make_uppercase', 'lowercase'));
     }

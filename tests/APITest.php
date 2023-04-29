@@ -8,14 +8,14 @@ use stdClass;
 use function MonkeyHook\find_filters;
 use function MonkeyHook\add_filters;
 
-use MonkeyHook\Mock\MockStaticClass;
+use MonkeyHook\Mock\MockClass;
 
 final class APITest extends TestCase {
 
     private $test_closure;
 
     protected function setUp(): void {
-        $test_object = new MockStaticClass();
+        $test_object = new MockClass();
 
         $this->test_closure = function($input){ return $input . '-closure';};
 
@@ -27,8 +27,8 @@ final class APITest extends TestCase {
         add_filter('no_op_2', 'some_function');
 
         add_filter('make_uppercase', $this->test_closure);
-        add_filters('make_uppercase', 'MonkeyHook\Mock\MockStaticClass::make_uppercase_static_1');
-        MockStaticClass::register_with_static('make_uppercase');
+        add_filters('make_uppercase', 'MonkeyHook\Mock\MockClass::make_uppercase_static_1');
+        MockClass::register_with_static('make_uppercase');
     }
     
     protected function tearDown(): void {
@@ -61,21 +61,21 @@ final class APITest extends TestCase {
     }
 
     public function testFindHookByObjectMethod() {
-        $hooks = find_filters('make_uppercase', ['MonkeyHook\Mock\MockStaticClass', 'make_uppercase_object']);
+        $hooks = find_filters('make_uppercase', ['MonkeyHook\Mock\MockClass', 'make_uppercase_object']);
         $this->assertCount(1, $hooks);
         $this->assertSame('make_uppercase', $hooks[0]->hook_name);
     }
 
     public function testFindHookByStaticMethod() {
-        $hooks = find_filters('make_uppercase', 'MonkeyHook\Mock\MockStaticClass::make_uppercase_static');
+        $hooks = find_filters('make_uppercase', 'MonkeyHook\Mock\MockClass::make_uppercase_static');
         $this->assertCount(1, $hooks);
-        $this->assertSame('MonkeyHook\Mock\MockStaticClass', $hooks[0]->that);
+        $this->assertSame('MonkeyHook\Mock\MockClass', $hooks[0]->that);
     }
 
     public function testFindHookByStaticMethodRegisteredWithString() {
-        $hooks = find_filters('make_uppercase', 'MonkeyHook\Mock\MockStaticClass::make_uppercase_static_1');
+        $hooks = find_filters('make_uppercase', 'MonkeyHook\Mock\MockClass::make_uppercase_static_1');
         $this->assertCount(1, $hooks);
-        $this->assertSame('MonkeyHook\Mock\MockStaticClass', $hooks[0]->that);
+        $this->assertSame('MonkeyHook\Mock\MockClass', $hooks[0]->that);
     }
 
     public function testFindHookNotFound() {
