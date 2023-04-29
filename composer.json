@@ -29,5 +29,8 @@
             "MonkeyHook\\Tests\\": "tests/"
         },
         "files": ["tests/mock/wordpress/plugin.php", "src/inc/API.php"]
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
     }	
 }
