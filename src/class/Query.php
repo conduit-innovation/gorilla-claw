@@ -43,29 +43,59 @@ class Query {
     private function find_callbacks(string | \Closure | array $needle, $haystack): array {
 
         $ret = [];
+        $is_static = false;
+
+        if(is_string($needle) && strpos($needle, "::")) {
+            $is_static = true;
+        }
 
         foreach($haystack as $function_key => $callback_definition) {
 
             if(is_array($needle)) {
-                // We are looking for a static or object callback
-                
-                if(!is_array($callback_definition['function']))
+                // We are looking for an object only.
+
+                if($callback_definition['function'] instanceof \Closure) {
                     continue;
+                }
 
                 $obj = $callback_definition['function'][0];
                 $method = $callback_definition['function'][1];
 
-                if(get_class($obj) === $needle[0]) {
+                if(is_string($obj) ? $obj === $needle[0] : get_class($obj) === $needle[0]) {
                     if($method === $needle[1]) {
                         $ret[$function_key] = $callback_definition;
                     }
+                } 
+
+            } elseif(is_string($needle) && $is_static) {
+                // We are looking for a static method
+                
+                if(is_string($callback_definition['function'])) {
+                    $callback_definition['function'] = explode("::", $callback_definition['function']);
                 }
 
+                if($callback_definition['function'] instanceof \Closure) {
+                    continue;
+                }
+
+                $obj = $callback_definition['function'][0];
+                $method = $callback_definition['function'][1];
+                list($find_obj, $find_method) = explode("::", $needle);
+
+                if($obj === $find_obj) {
+                    if($method === $find_method) {
+                        $ret[$function_key] = $callback_definition;
+                    }
+                } 
+
             } else {
+                // We are looking for a function name or a closure
+
                 if($callback_definition['function'] === $needle) {
                     $ret[$function_key] = $callback_definition;
                 }
             }
+
         }
 
         return $ret;

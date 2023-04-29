@@ -19,7 +19,7 @@ class Hook implements HookInterface
         $this->that = null;
         
         if (is_array($callback['function'])) {
-            if (is_object($callback['function'][0])) {
+            if (is_object($callback['function'][0])) { 
                 $this->that = &$callback['function'][0];
             } else {
                 $this->that = $callback['function'][0];
@@ -47,13 +47,14 @@ class Hook implements HookInterface
                 $this->callback['function'] = [&$this->that, $callback];
             } elseif (!is_null($this->that) && is_string($this->that)) {
                 // Static binding
-                $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] = (new HookProxyStatic($callback, $this->that))->__cb;
-                $this->callback['function'] = [$this->that, $callback];
+                $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] = $callback;
+                $this->callback['function'] =  $callback;
             } elseif (is_null($this->that)) {
                 // No rescoping or binding
                 $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] = $callback;
                 $this->callback['function'] = $callback;
             } else {
+                echo('bad hook');
                 // Bad hook format, just return false
                 return false;
             }

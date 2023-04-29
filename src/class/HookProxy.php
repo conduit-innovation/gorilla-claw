@@ -10,7 +10,7 @@ class HookProxy {
         $proxy = &$this;
         $this->__that = &$that;
         $this->__cb = \Closure::bind(function (...$args) use (&$proxy, &$hook_cb) {
-            \Closure::bind($hook_cb, $proxy)(...$args);
+            return \Closure::bind($hook_cb, $proxy)(...$args);
         }, $that);
     }
  
