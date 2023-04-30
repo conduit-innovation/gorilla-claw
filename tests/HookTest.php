@@ -137,6 +137,26 @@ final class HookTest extends WPFilterTestCase {
         });
 
         $this->assertEquals('test-before-obj-after', apply_filters('test_inject', 'test'));
+
+        add_filter('test_inject_2', [$test_object, 'test'], 10);
+        
+        $hooks = find_filters('test_inject_2');
+
+        $hooks->inject(false, function($input) {
+            return $input . '-after';
+        });
+
+        $this->assertEquals('test-obj-after', apply_filters('test_inject_2', 'test'));
+
+        add_filter('test_inject_3', [$test_object, 'test'], 10);
+        
+        $hooks = find_filters('test_inject_3');
+
+        $hooks->inject(function($input) {
+            return $input . '-before';
+        });
+
+        $this->assertEquals('test-before-obj', apply_filters('test_inject_3', 'test'));
     }
 
     public function testTolerateBrokenWpFilter() {
