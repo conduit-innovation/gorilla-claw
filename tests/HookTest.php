@@ -23,6 +23,14 @@ final class HookTest extends WPFilterTestCase {
         $this->assertSame($this, $hook->that);
     }
 
+    public function testHookExists() {
+        $test_object = new MockClass();
+        add_filter('test_replace', [$test_object, 'get_id']);
+
+        $hooks = find_filters('test_replace', ['MonkeyHook\Mock\MockClass', 'get_id']);
+        $this->assertEquals(true, $hooks->exists());
+    }
+
     public function testHookReplace() {
         $test_object = new MockClass();
         add_filter('test_replace', [$test_object, 'get_id']);
@@ -54,6 +62,19 @@ final class HookTest extends WPFilterTestCase {
         $this->assertSame('static', apply_filters('test_1', 'input'));
     }
 
+    public function testHookReplaceNonObject() {
+
+        add_filter('test_1', 'var_dump');
+
+        $hook = find_filters('test_1');
+        
+        $hook->replace(function($input) {
+            return 'non-object';
+        });
+
+        $this->assertSame('non-object', apply_filters('test_1', 'input'));
+    }
+
     public function testHookRebind() {
         $test_object = new MockClass();
 
@@ -68,6 +89,26 @@ final class HookTest extends WPFilterTestCase {
 
         add_filter('test_rebind', [$test_object, 'get_id'], 30);
         $this->assertEquals(2, apply_filters('test_rebind', 0));
+    }
+
+    public function testHookRebindFromCollection() {
+        $test_object = new MockClass();
+
+        add_filter('test_rebind', [$test_object, 'get_id'], 10);
+        
+        $hooks = find_filters('test_rebind');
+        
+        $this->expectException('\ErrorException');
+        $hooks->rebind('test_rebind', function() {}, 20);
+    }
+
+    public function testHookRebindFromNonObject() {
+        add_filter('test_rebind', 'var_dump');
+        
+        $hooks = find_filters('test_rebind');
+        
+        $this->expectException('\ErrorException');
+        $hooks[0]->rebind('test_rebind', function() {}, 20);
     }
 
     public function testHookRemove() {
@@ -97,5 +138,24 @@ final class HookTest extends WPFilterTestCase {
 
         $this->assertEquals('test-before-obj-after', apply_filters('test_inject', 'test'));
     }
+
+    public function testTolerateBrokenWpFilter() {
+        global $wp_filter;
+
+        $test_object = new MockClass();
+
+        add_filter('test_broken', [$test_object, 'get_id'], 10);
+
+        $hooks = find_filters('test_broken');
+
+        $wp_filter = [];
+
+        $hooks->replace(function($input) {
+            return 'replaced';
+        });
+
+        $this->assertEquals(0, apply_filters('test_broken', 0));
+    }
+
 
 }
