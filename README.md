@@ -2,24 +2,22 @@
 ![Build](https://img.shields.io/github/actions/workflow/status/conduit-innovation/monkey-hook/php.yml?style=flat)
 ![Coverage](https://raw.githubusercontent.com/conduit-innovation/monkey-hook/image-data/coverage.svg)
 
-
 Coherent WordPress action / filter hook API, with monkey-patching capabilities.
 
-- Easily find hook handlers, by filter, function name, object name and method
-- Replace hook callbacks in one line, *even use the original callback's `$this` via magic scope binding*
-- Add new handlers, bound to another's scope (see 'rebind')
-- Inject pre and post processors to existing handlers, with scope binding
+- **[Locate](#user-content-locating)** - Easily find hook handlers, by filter, function name, object name and method
+- **[Replace](#user-content-replacement)** - Replace hook callbacks in one line, *even use the original callback's `$this` via magic scope binding*
+- **[Rebind](#user-content-rebinding)** - Add new handlers, bound to another's scope (see 'rebind')
+- **[Inject](#user-content-injection)** - Inject pre and post processors to existing handlers, with scope binding
 - TODO: Profile individual handlers, or the entire hook
 - Manage hook handlers as a group
 - `add_filters()` and `add_actions()` for attaching to multiple hooks in a single command
-
 
 ## Installation
 
 Via composer:
 
 ```bash
-composer require conduit/hook-monkey
+composer require conduit/monkey-hook
 ```
 
 ## Locating
@@ -96,10 +94,19 @@ $hooks->inject(function($input) {
 });
 ```
 
-### Adding
+## Adding
 
 ...tbc
 
+## What this is, and what this isn't
+
+Ideally, you should never 'need' this library. However, with plugin developers making use of objects more frequently (good!), and not always being mindful of scope limitations (bad), you can sometimes need to patch-in to a plugin object's scope and work with private variables / methods. Some examples of this include plugins that set up Gutenberg Blocks, and plugins that use dependency injection.
+
+If you can achieve your goal without this library, then do that instead.
+
+Runtime monkey-patching can cause a whole load of debugging hassle if done incorrectly, so please be very careful if modifying object properties whether using `replace`, `rebind` or `inject`.
+
+With that all in mind, testing and complexity of this library is critical. `monkey-hook` aims for a [CRAP](http://www.ncover.com/blog/change-risk-anti-patterns-code-complexity/) score of < 20.
 
 ## Contributing
 
