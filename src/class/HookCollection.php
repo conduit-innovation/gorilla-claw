@@ -3,11 +3,9 @@
 class HookCollection implements \ArrayAccess, \Countable, \Iterator {
     protected array $wp_filter;
     protected array $callbacks;
-    private $pos;
 
     function __construct(array $wp_filter) {
         $this->wp_filter = $wp_filter;
-        $this->pos = 0;
 
         $collect = [];
 
@@ -68,22 +66,22 @@ class HookCollection implements \ArrayAccess, \Countable, \Iterator {
     }
 
     public function rewind(): void {
-        $this->pos = 0;
+        rewind($this->callbacks);
     }
 
     public function next(): void {
-        $this->pos++;
+        next($this->callbacks);
     }
 
     public function current(): Hook {
-        return $this->callbacks[$this->pos];
+        return current($this->callbacks);
     }
 
     public function valid(): bool {
-        return isset($this->callbacks[$this->pos]);
+        return key($this->callbacks) !== null;
     }
 
     public function key(): int {
-        return $this->pos;
+        return key($this->callbacks);
     }
 }
