@@ -6,7 +6,15 @@ class Query {
     function __construct(array &$wp_filter) {
         $this->wp_filter = &$wp_filter;
     }
-
+    
+    /**
+     * find
+     *
+     * @param  mixed $hook_names
+     * @param  mixed $target_callback
+     * @return HookCollection
+     */
+    
     public function find(string | array $hook_names, string | \Closure | array | false $target_callback = false): HookCollection {
         $results = [];
         
@@ -39,7 +47,15 @@ class Query {
 
         return new HookCollection($results);
     }
-
+    
+    /**
+     * find_callbacks
+     *
+     * @param  mixed $needle
+     * @param  mixed $haystack
+     * @return array
+     */
+    
     private function find_callbacks(string | \Closure | array $needle, $haystack): array {
 
         $ret = [];
@@ -100,8 +116,18 @@ class Query {
 
         return $ret;
     }
-
-    public function add_to_wp_filter_structure(array &$wp_filter, string $hook_name, callable | array $callbacks, int $priority) {
+    
+    /**
+     * add_to_wp_filter_structure
+     *
+     * @param  mixed $wp_filter
+     * @param  mixed $hook_name
+     * @param  mixed $callbacks
+     * @param  mixed $priority
+     * @return void
+     */
+    
+    private function add_to_wp_filter_structure(array &$wp_filter, string $hook_name, callable | array $callbacks, int $priority) {
         if(!isset($wp_filter[$hook_name])) {
             $wp_filter[$hook_name] = [$priority => []];
         }
