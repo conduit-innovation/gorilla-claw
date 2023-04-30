@@ -18,12 +18,8 @@ class HookProxy {
     }
  
     function __set($prop, $val) {
-        if(isset($this->$prop)) {
-            $this->__that->$prop = $val;
-        } else {
-            $private = &$this->__get_private($prop);
-            $private = $val;
-        }
+        $private = &$this->__get_private($prop);
+        $private = $val;
     }
  
     function __call($method, $args) {
@@ -32,18 +28,20 @@ class HookProxy {
             return $this->__cb->bindTo($this->__that, $this->__that)(...$args);
         }
 
-        try {
-            return $this->__that->$method(...$args);
-        } catch (\Exception  $e) {
-            $private = &$this->__get_private($method);
-            return \Closure::bind($private, $this->__that, $this->__that)(...$args);
-        }
+        return $this->__call_private($method, $args);
     }
      
     public function &__get_private($var): mixed {
         $that = &$this->__that;
         return \Closure::bind(function &($that) use ($var) {
             return $that->$var;
+        }, $that, $that)($that);
+    }
+
+    public function __call_private($var, $args): mixed {
+        $that = &$this->__that;
+        return \Closure::bind(function ($that) use ($var, $args) {
+            return $that->$var(...$args);
         }, $that, $that)($that);
     }
  }

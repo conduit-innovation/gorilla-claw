@@ -1,18 +1,42 @@
-name: PHP Composer
+name: PHPUnit Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop-**" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "develop-**" ]
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  test:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    - name: Run test suite
+      run: composer run-script coverage
+  test-main:
 
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - uses: actions/checkout@v3
