@@ -1,5 +1,5 @@
 {
-    "name": "conduit-innovation/monkey-hook",
+    "name": "conduit/monkey-hook",
     "description": "Coherent WordPress action / filter hook API, with monkey-patching capabilities.",
     "keywords": ["wordpress", "composer", "filter", "action", "hook"],
     "license": "MIT",
