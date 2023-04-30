@@ -1,4 +1,4 @@
-name: PHP Composer
+name: PHPUnit Tests
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     if: github.ref != 'refs/heads/main'
     steps:
@@ -33,7 +33,7 @@ jobs:
 
     - name: Run test suite
       run: composer run-script coverage
-  build-main:
+  test-main:
 
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
