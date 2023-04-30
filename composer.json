@@ -33,6 +33,8 @@
         "files": ["tests/mock/wordpress/plugin.php", "src/inc/API.php"]
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+        "test": "./vendor/bin/phpunit --no-coverage",
+        "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-text",
+        "test-verbose": "./vendor/bin/phpunit --display-deprecations --display-warnings --no-coverage"
     }	
 }

@@ -1,8 +1,19 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./vendor/autoload.php" colors="true" stopOnFailure="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" cacheDirectory=".phpunit.cache">
-  <testsuites>
-    <testsuite name="Unit Tests">
-      <directory>tests</directory>
-    </testsuite>
-  </testsuites>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./vendor/autoload.php" colors="true" stopOnFailure="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" cacheDirectory=".phpunit.cache/code-coverage">
+	<testsuites>
+		<testsuite name="Unit Tests">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+	<source>
+		<include>
+			<directory suffix=".php">src/class</directory>
+			<directory suffix=".php">src/inc</directory>
+		</include>
+	</source>
+	<coverage pathCoverage="true">
+		<report>
+            <clover outputFile="clover.xml" />
+        </report>
+	</coverage>
 </phpunit>
