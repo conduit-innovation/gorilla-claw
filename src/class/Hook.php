@@ -9,15 +9,29 @@ class Hook implements HookInterface
     public $hook_name;
     public $priority;
     public $that;
-
+    public $original_callback;
+    
+    /**
+     * __construct
+     *
+     * @param  mixed $hook_name
+     * @param  mixed $callback
+     * @param  mixed $priority
+     * @param  mixed $function_key
+     * @return void
+     */
+    
     function __construct($hook_name, $callback, $priority, $function_key)
     {
+        global $wp_filter;
+
         $this->function_key = $function_key;
         $this->callback = $callback;
         $this->hook_name = $hook_name;
         $this->priority = $priority;
         $this->that = null;
-        
+        $this->original_callback = isset($wp_filter[$this->hook_name]) ? $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] : false;
+
         if (is_array($callback['function'])) {
             if (is_object($callback['function'][0])) { 
                 $this->that = &$callback['function'][0];
@@ -26,12 +40,25 @@ class Hook implements HookInterface
             }
         }
     }
-
+    
+    /**
+     * remove
+     *
+     * @return bool
+     */
+    
     public function remove(): bool
     {
         return remove_filter($this->hook_name, $this->callback['function'], $this->priority);
     }
-
+    
+    /**
+     * replace
+     *
+     * @param  mixed $callback
+     * @return bool
+     */
+    
     public function replace(callable $callback): bool
     {
         global $wp_filter;
@@ -54,7 +81,6 @@ class Hook implements HookInterface
                 $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] = $callback;
                 $this->callback['function'] = $callback;
             } else {
-                echo('bad hook');
                 // Bad hook format, just return false
                 return false;
             }
@@ -63,11 +89,27 @@ class Hook implements HookInterface
 
         return false;
     }
-
+    
+    /**
+     * exists
+     *
+     * @return bool
+     */
+    
     public function exists(): bool
     {
         return true;
     }
+    
+    /**
+     * rebind
+     *
+     * @param  mixed $hook_name
+     * @param  mixed $callback
+     * @param  mixed $priority
+     * @param  mixed $accepted_args
+     * @return void
+     */
 
     public function rebind(string $hook_name, callable $callback, int $priority = 10, $accepted_args = 1) {
         if(is_null($this->that)) {
@@ -75,5 +117,21 @@ class Hook implements HookInterface
         }
 
         add_filter($hook_name, (new HookProxy($callback, $this->that))->__cb, $priority, $accepted_args);
+    }
+
+    public function inject($before, $after = false) {
+        $original_callback = &$this->original_callback;
+
+        $this->replace(function(...$args) use ($before, $after, $original_callback) {
+            if($before)
+                $args[0] = $before(...$args);
+
+            $args[0] = call_user_func_array($original_callback, $args);
+            
+            if($after)
+                $args[0] = $after(...$args);
+
+            return $args[0];
+        });
     }
 }
