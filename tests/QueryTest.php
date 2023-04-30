@@ -74,5 +74,4 @@ final class QueryTest extends WPFilterTestCase {
         $hooks = find_filters('test', 'MonkeyHook\Mock\MockClass::');
         $this->assertCount(2, $hooks);
     }
-
 }

@@ -13,7 +13,8 @@
 	</source>
 	<coverage pathCoverage="true">
 		<report>
-            <clover outputFile="clover.xml" />
+            <clover outputFile="cov.xml" />
+			<html outputDirectory="coverage/" />
         </report>
 	</coverage>
 </phpunit>

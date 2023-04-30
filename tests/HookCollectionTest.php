@@ -4,6 +4,8 @@ use MonkeyHook\Types\WPFilterTestCase;
 use MonkeyHook\HookCollection;
 use MonkeyHook\Hook;
 
+use function MonkeyHook\find_filters;
+
 final class HookCollectionTest extends WPFilterTestCase {
     public function testArrayAccessIterable() {
 
@@ -48,6 +50,21 @@ final class HookCollectionTest extends WPFilterTestCase {
         $collection->next();
 
         $this->assertEquals('bar', $collection->current()->hook_name);
+    }
+
+    public function testRemoveOnCollection() {
+
+        global $wp_filters;
+        
+        add_action('foo', 'foo');
+        add_action('foo', 'bar');
+        add_action('foo', 'baz');
+
+        $hooks = find_filters('foo');
+
+        $hooks->remove();
+
+        $this->assertCount(3, $hooks);
     }
 
 }
