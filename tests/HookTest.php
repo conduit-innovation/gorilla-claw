@@ -58,7 +58,6 @@ final class HookTest extends WPFilterTestCase {
         $test_object = new MockClass();
 
         add_filter('test_rebind', [$test_object, 'get_id'], 10);
-        //add_filter('test_rebind', function(){}, 10);
         
         $hooks = find_filters('test_rebind');
 
@@ -68,10 +67,19 @@ final class HookTest extends WPFilterTestCase {
         }, 20);
 
         add_filter('test_rebind', [$test_object, 'get_id'], 30);
-
-        // var_dump($GLOBALS['wp_filter']['test_rebind'][10]);
-
         $this->assertEquals(2, apply_filters('test_rebind', 0));
+    }
+
+    public function testHookRemove() {
+        $test_object = new MockClass();
+
+        add_filter('test_remove', [$test_object, 'get_id'], 10);
+        
+        $hooks = find_filters('test_remove');
+
+        $hooks->remove();
+
+        $this->assertEquals(1, apply_filters('test_remove', 1));
     }
 
 }
