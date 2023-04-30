@@ -126,8 +126,8 @@ class Query {
      * @param  mixed $priority
      * @return void
      */
-    
-    private function add_to_wp_filter_structure(array &$wp_filter, string $hook_name, callable | array $callbacks, int $priority) {
+
+    private function add_to_wp_filter_structure(array &$wp_filter, string $hook_name, array $callbacks, int $priority) {
         if(!isset($wp_filter[$hook_name])) {
             $wp_filter[$hook_name] = [$priority => []];
         }
@@ -136,6 +136,6 @@ class Query {
             $wp_filter[$hook_name][$priority] = [];
         }
 
-        $wp_filter[$hook_name][$priority] += is_array($callbacks) ? $callbacks : [$callbacks];
+        $wp_filter[$hook_name][$priority] += $callbacks;
     } 
 }
