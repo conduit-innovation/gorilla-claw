@@ -23,10 +23,10 @@ class HookProxy {
     }
  
     function __set($prop, $val) {
-        try {
+        if(isset($this->$prop)) {
             $this->$prop = $val;
-        } catch (\Exception  $e) {
-            $private = $this->__get_private($prop);
+        } else {
+            $private = &$this->__get_private($prop);
             $private = $val;
         }
     }
@@ -35,7 +35,7 @@ class HookProxy {
         try {
             return $this->$method(...$args);
         } catch (\Exception  $e) {
-            $private = $this->__get_private($method);
+            $private = &$this->__get_private($method);
             return \Closure::bind($private, $this->__that, $this->__that)(...$args);
         }
     }

@@ -62,7 +62,7 @@ class Query {
                 $method = $callback_definition['function'][1];
 
                 if(is_string($obj) ? $obj === $needle[0] : get_class($obj) === $needle[0]) {
-                    if($method === $needle[1]) {
+                    if($method === $needle[1] || $needle[1] === false) {
                         $ret[$function_key] = $callback_definition;
                     }
                 } 
@@ -83,7 +83,7 @@ class Query {
                 list($find_obj, $find_method) = explode("::", $needle);
 
                 if($obj === $find_obj) {
-                    if($method === $find_method) {
+                    if($method === $find_method || empty($find_method)) {
                         $ret[$function_key] = $callback_definition;
                     }
                 } 
@@ -101,7 +101,7 @@ class Query {
         return $ret;
     }
 
-    private function add_to_wp_filter_structure(&$wp_filter, $hook_name, $callbacks, $priority) {
+    public function add_to_wp_filter_structure(array &$wp_filter, string $hook_name, callable | array $callbacks, int $priority) {
         if(!isset($wp_filter[$hook_name])) {
             $wp_filter[$hook_name] = [$priority => []];
         }

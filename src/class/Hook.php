@@ -68,4 +68,12 @@ class Hook implements HookInterface
     {
         return true;
     }
+
+    public function rebind(string $hook_name, callable $callback, int $priority = 10, $accepted_args = 1) {
+        if(is_null($this->that)) {
+            throw new \ErrorException('Cannot rebind from a non-object hook');
+        }
+
+        add_filter($hook_name, (new HookProxy($callback, $this->that))->__cb, $priority, $accepted_args);
+    }
 }

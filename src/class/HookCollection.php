@@ -49,8 +49,13 @@ class HookCollection implements \ArrayAccess, \Countable, \Iterator {
     }
 
     function __call($prop, $args) {
+        $prohibit = ['rebind'];
         $ret = [];
         
+        if(in_array($prop, $prohibit)) {
+            throw new \ErrorException("Cannot rebind from a HookCollection");
+        }
+
         foreach($this->callbacks as $hook) {
             $ret[$hook->function_key] = $hook->$prop(...$args);
         }
