@@ -1,6 +1,5 @@
 <?php namespace MonkeyHook;
 
-
 class HookProxy {
    
     public $__cb;
@@ -15,16 +14,12 @@ class HookProxy {
     }
  
     function __get($prop) {
-        try {
-            return $this->$prop;
-        } catch (\Exception  $e) {
-            return $this->__get_private($prop);
-        }
+        return $this->__get_private($prop);
     }
  
     function __set($prop, $val) {
         if(isset($this->$prop)) {
-            $this->$prop = $val;
+            $this->__that->$prop = $val;
         } else {
             $private = &$this->__get_private($prop);
             $private = $val;
@@ -32,8 +27,13 @@ class HookProxy {
     }
  
     function __call($method, $args) {
+
+        if($method === '__cb') {
+            return $this->__cb->bindTo($this->__that, $this->__that)(...$args);
+        }
+
         try {
-            return $this->$method(...$args);
+            return $this->__that->$method(...$args);
         } catch (\Exception  $e) {
             $private = &$this->__get_private($method);
             return \Closure::bind($private, $this->__that, $this->__that)(...$args);
