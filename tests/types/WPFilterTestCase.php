@@ -17,8 +17,11 @@ abstract class WPFilterTestCase extends TestCase {
     }
 
     protected function tearDown(): void {
-        global $wp_filter;
+        global $wp_filter, $wp_filters, $wp_actions, $wp_current_filter;
         $wp_filter = [];
+        $wp_filters = [];
+        $wp_actions = [];
+        $wp_current_filter = [];
     }
 
 }
