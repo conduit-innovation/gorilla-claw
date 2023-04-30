@@ -34,8 +34,6 @@ A unique feature of MonkeyHook is that it automatically binds your hook handlers
 
 > :warning: _**Ignore them at your peril.**_
 
-_Turn off your linters, throw away your test suite, encrypt your codebase! It's time to break shit..._
-
 **MonkeyHook can be used for good. It can also be used for evil.**
 
 ## Locating
@@ -184,7 +182,9 @@ $hooks->rebind('another_action', function() {});
 
 Injection allows you to add functions executed before and after a single filter handler. You may access `$this` and even modify private variables.
 
-Most of the time, if we want a function to run before an existing handler, we just add it with a 'lower' priority number, and the opposite for after. *This is the right way.* However, some times we just want to manipulate a single handler, like maybe ...ugh.. call methods that change the object state, so it makes sense to `modify -> run the original -> un-modify`, so future interactions with the object remain unaffected.
+Most of the time, if we want a function to run before an existing handler, we just add it with a 'lower' priority number, and 'higher' to run after. *This is the right way.* However, some times we just want to manipulate a single handler, like maybe ...ugh.. call methods that change the object state, so it makes sense to `modify -> run the original -> un-modify`, so future interactions with the object remain unaffected.
+
+Both before and after callbacks are optional, and feed through their arguments and return values in the usual chained WordPress way.
 
 ```php
 use function MonkeyHook\find_filters;
@@ -237,3 +237,6 @@ Please make sure to update tests as appropriate.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+---
+_Turn off your linters, throw away your test suite, encrypt your codebase! It's time to break shit..._
