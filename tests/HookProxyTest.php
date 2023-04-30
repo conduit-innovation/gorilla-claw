@@ -71,4 +71,30 @@ final class HookProxyTest extends TestCase {
 
         $this->assertEquals('this-static', $proxy->__cb('this'));
     }
+
+    public function testPrivateThisCall() {
+
+        $cb = function($input) {
+            return $input . '-' . $this->{'private_id'};
+        };
+
+        $obj = new MockClass(1);
+
+        $proxy = new HookProxy($cb, $obj);
+
+        $this->assertEquals('id-1', $proxy->__cb('id'));
+    }
+
+    public function testPrivateThisMethodCall() {
+
+        $cb = function($input) {
+            return $input . '-' . $this->{'get_private_id'}();
+        };
+
+        $obj = new MockClass(1);
+
+        $proxy = new HookProxy($cb, $obj);
+
+        $this->assertEquals('id-1', $proxy->__cb('id'));
+    }
 }

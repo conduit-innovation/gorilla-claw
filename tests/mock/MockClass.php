@@ -6,14 +6,20 @@ class MockClass {
 
     public static $static_prop = 'static';
     public $id;
+    private $private_id;
 
     function __construct($id = 1) {
         if($id) {
             $this->id = $id;
+            $this->private_id = $id;
         }
     }
 
     public function get_id() {
+        return $this->id;
+    }
+
+    private function get_private_id() {
         return $this->id;
     }
 
@@ -35,5 +41,9 @@ class MockClass {
 
     public function test_static_1($input) {
         return $input . '-static_1';
+    }
+
+    private function test_private($input) {
+        return $input . '-private';
     }
 }
