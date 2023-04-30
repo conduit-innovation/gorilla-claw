@@ -61,25 +61,49 @@ class HookCollection implements \ArrayAccess, \Countable, \Iterator {
         return $ret;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
+
     public function count(): int {
         return count($this->callbacks);
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
 
     public function rewind(): void {
         rewind($this->callbacks);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
+
     public function next(): void {
         next($this->callbacks);
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
 
     public function current(): Hook {
         return current($this->callbacks);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
+
     public function valid(): bool {
         return key($this->callbacks) !== null;
     }
+
+    /**
+     * @codeCoverageIgnore
+     */
 
     public function key(): int {
         return key($this->callbacks);
