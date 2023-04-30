@@ -134,7 +134,7 @@ $hooks->replace(function($input, $any, $other, $args) {
     return str_replace("Hello", "Goodbye", $this->hello());
 });
 ```
-> :warning: **Properties are _writeable_, even if `protected` or `static` or `final class`.**
+> :warning: **Properties are _writeable_, even if `protected` or `private` or `final class`.**
 
 > :warning: **Methods called by the replaced handler may change object state for subsequent calls for this action or others relying on the original object.** This can cause unpredictable behaviour in most cases.
 
