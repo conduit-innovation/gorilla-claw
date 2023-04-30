@@ -34,6 +34,8 @@ A unique feature of MonkeyHook is that it automatically binds your hook handlers
 
 > :warning: _**Ignore them at your peril.**_
 
+As well as the dangerous features, the library contains some useful functionality for locating handlers and replacing or removing them (safely).
+
 **MonkeyHook can be used for good. It can also be used for evil.**
 
 ## Locating
