@@ -443,7 +443,7 @@ final class WP_Hook implements Iterator, ArrayAccess {
 	 * @return bool True if the offset exists, false otherwise.
 	 */
 	#[ReturnTypeWillChange]
-	public function offsetExists( $offset ) {
+	public function offsetExists( $offset ): bool {
 		return isset( $this->callbacks[ $offset ] );
 	}
 
@@ -473,7 +473,7 @@ final class WP_Hook implements Iterator, ArrayAccess {
 	 * @param mixed $value The value to set.
 	 */
 	#[ReturnTypeWillChange]
-	public function offsetSet( $offset, $value ) {
+	public function offsetSet( $offset, $value ): void {
 		if ( is_null( $offset ) ) {
 			$this->callbacks[] = $value;
 		} else {
@@ -491,7 +491,7 @@ final class WP_Hook implements Iterator, ArrayAccess {
 	 * @param mixed $offset The offset to unset.
 	 */
 	#[ReturnTypeWillChange]
-	public function offsetUnset( $offset ) {
+	public function offsetUnset( $offset ): void {
 		unset( $this->callbacks[ $offset ] );
 	}
 
@@ -519,8 +519,8 @@ final class WP_Hook implements Iterator, ArrayAccess {
 	 * @return array Of callbacks at next priority.
 	 */
 	#[ReturnTypeWillChange]
-	public function next() {
-		return next( $this->callbacks );
+	public function next(): void {
+		next( $this->callbacks );
 	}
 
 	/**
@@ -533,7 +533,7 @@ final class WP_Hook implements Iterator, ArrayAccess {
 	 * @return mixed Returns current priority on success, or NULL on failure
 	 */
 	#[ReturnTypeWillChange]
-	public function key() {
+	public function key(): string {
 		return key( $this->callbacks );
 	}
 
@@ -547,7 +547,7 @@ final class WP_Hook implements Iterator, ArrayAccess {
 	 * @return bool Whether the current position is valid.
 	 */
 	#[ReturnTypeWillChange]
-	public function valid() {
+	public function valid(): bool {
 		return key( $this->callbacks ) !== null;
 	}
 
@@ -559,7 +559,7 @@ final class WP_Hook implements Iterator, ArrayAccess {
 	 * @link https://www.php.net/manual/en/iterator.rewind.php
 	 */
 	#[ReturnTypeWillChange]
-	public function rewind() {
+	public function rewind(): void {
 		reset( $this->callbacks );
 	}
 

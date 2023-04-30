@@ -30,7 +30,7 @@ final class HookTest extends WPFilterTestCase {
         $hooks = find_filters('test_replace', ['MonkeyHook\Mock\MockClass', 'get_id']);
 
         $hooks->replace(function($input) {
-            $this->id = 2;
+            $this->{'id'} = 2; // Equivalent to $this->id, but linter complains otherwise
             return 'replaced';
         });
 
@@ -62,7 +62,7 @@ final class HookTest extends WPFilterTestCase {
         $hooks = find_filters('test_rebind');
 
         $hooks[0]->rebind('test_rebind', function($input) {
-            $this->id = 2;
+            $this->{'id'} = 2; // Equivalent to $this->id, but linter complains otherwise
             return $input;
         }, 20);
 
