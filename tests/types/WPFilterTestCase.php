@@ -24,4 +24,11 @@ abstract class WPFilterTestCase extends TestCase {
         $wp_current_filter = [];
     }
 
+    protected static function reflectProperty($object, $property)
+    {
+        $reflectedClass = new \ReflectionClass($object);
+        $reflection = $reflectedClass->getProperty($property);
+        $reflection->setAccessible(true);
+        return $reflection->getValue($object);
+    }
 }
