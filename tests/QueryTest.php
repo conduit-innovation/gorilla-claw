@@ -4,6 +4,7 @@ namespace MonkeyHook\Test;
 
 use MonkeyHook\Types\WPFilterTestCase;
 use MonkeyHook\Hook;
+use MonkeyHook\Query;
 use MonkeyHook\Mock\MockClass;
 
 use function MonkeyHook\find_filters;
@@ -12,6 +13,13 @@ final class QueryTest extends WPFilterTestCase {
     protected function setUp(): void {
         parent::setUp();
     }
+
+    public function testQueryConstructor() {
+        $test_array = ['foo'];
+        $query = new Query($test_array);
+        $this->assertEquals($test_array, self::reflectProperty($query, 'wp_filter'));
+    }
+
 
     public function testFindNothing() {
         $hooks = find_filters('nothing');
