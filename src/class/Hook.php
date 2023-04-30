@@ -2,7 +2,7 @@
 
 namespace MonkeyHook;
 
-class Hook implements HookInterface
+class Hook
 {
     public $function_key;
     public $callback;
@@ -80,27 +80,14 @@ class Hook implements HookInterface
                 // No rescoping or binding
                 $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] = $callback;
                 $this->callback['function'] = $callback;
-            } else {
-                // Bad hook format, just return false
-                return false;
-            }
+            } 
+            
             return true;
         }
 
         return false;
     }
-    
-    /**
-     * exists
-     *
-     * @return bool
-     */
-    
-    public function exists(): bool
-    {
-        return true;
-    }
-    
+        
     /**
      * rebind
      *

@@ -36,14 +36,8 @@ class HookCollection implements \ArrayAccess, \Countable, \Iterator {
         unset($this->callbacks[$offset]);
     }
 
-    function __get($prop) {
-        $ret = [];
-
-        foreach($this->callbacks as $hook) {
-            $ret[$hook->function_key] = $hook->$prop;
-        }
-
-        return $ret;
+    public function exists() {
+        return count($this->callbacks) > 0;
     }
 
     function __call($prop, $args) {
@@ -61,50 +55,31 @@ class HookCollection implements \ArrayAccess, \Countable, \Iterator {
         return $ret;
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
-
     public function count(): int {
         return count($this->callbacks);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
 
     public function rewind(): void {
-        rewind($this->callbacks);
+        reset($this->callbacks);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
 
     public function next(): void {
         next($this->callbacks);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
-
+    #[\ReturnTypeWillChange]
     public function current(): Hook {
         return current($this->callbacks);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
 
     public function valid(): bool {
         return key($this->callbacks) !== null;
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
-
+    #[\ReturnTypeWillChange]
     public function key(): int {
         return key($this->callbacks);
     }
