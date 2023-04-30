@@ -63,6 +63,7 @@ jobs:
       uses: timkrase/phpunit-coverage-badge@v1.2.1
       with:
         coverage_badge_path: output/coverage.svg
+        report: cov.xml
         push_badge: false
 
     - name: Git push to image-data branch
