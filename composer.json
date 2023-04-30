@@ -26,9 +26,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "MonkeyHook\\Tests\\": "tests/"
+            "MonkeyHook\\Tests\\": "tests/"  ,
+            "MonkeyHook\\Types\\": "tests/types/",
+            "MonkeyHook\\Mock\\": "tests/mock/"            
         },
-        "files": ["tests/mock/wordpress/plugin.php", "tests/mock/MockClass.php", "src/inc/API.php"]
+        "files": ["tests/mock/wordpress/plugin.php", "src/inc/API.php"]
     },
     "scripts": {
         "test": "./vendor/bin/phpunit"
