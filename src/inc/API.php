@@ -37,7 +37,7 @@ function find_filters(string | array $hook_name, mixed $callback = false): HookC
  * @return void
  */
 
-function add_actions(string | array $hook_name, $callback, $priority, $accepted_args): void {
+function add_actions(string | array $hook_name, $callback, $priority = 10, $accepted_args = 1): void {
     add_filters($hook_name, $callback, $priority, $accepted_args);
 }
 

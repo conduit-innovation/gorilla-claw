@@ -7,6 +7,8 @@ use MonkeyHook\Mock\MockClass;
 
 use function MonkeyHook\find_filters;
 use function MonkeyHook\add_filters;
+use function MonkeyHook\add_actions;
+use function MonkeyHook\find_actions;
 
 final class APITest extends WPFilterTestCase {
 
@@ -40,6 +42,36 @@ final class APITest extends WPFilterTestCase {
         $this->assertCount(2, $hooks);
 
         $hooks = find_filters(['no_op', 'no_op_2']);
+        $this->assertCount(2, $hooks);
+
+        $hooks = find_actions('no_op');
+        $this->assertCount(1, $hooks);
+        $this->assertSame('no_op', $hooks[0]->hook_name);
+
+        $hooks = find_actions('no_op no_op_2');
+        $this->assertCount(2, $hooks);
+
+        $hooks = find_actions(['no_op', 'no_op_2']);
+        $this->assertCount(2, $hooks);
+    } 
+
+    public function testAdders() {
+        add_filters('add_filters', function() {});
+        $hooks = find_filters('add_filters');
+        $this->assertCount(1, $hooks);
+        $this->assertSame('add_filters', $hooks[0]->hook_name);
+
+        add_filters('add_filters_2 add_filters_3', function() {});
+        $hooks = find_filters('add_filters_2 add_filters_3');
+        $this->assertCount(2, $hooks);
+
+        add_actions('add_actions', function() {});
+        $hooks = find_actions('add_actions');
+        $this->assertCount(1, $hooks);
+        $this->assertSame('add_actions', $hooks[0]->hook_name);
+
+        add_actions('add_actions_2 add_actions_3', function() {});
+        $hooks = find_actions('add_actions_2 add_actions_3');
         $this->assertCount(2, $hooks);
     }
 
