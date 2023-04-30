@@ -29,7 +29,7 @@ class Hook implements HookInterface
 
     public function remove(): bool
     {
-        return remove_filter($this->hook_name, $this->callback, $this->priority);
+        return remove_filter($this->hook_name, $this->callback['function'], $this->priority);
     }
 
     public function replace(callable $callback): bool
