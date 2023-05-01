@@ -17,7 +17,7 @@ jobs:
 
       - name: Run phpdoc
         run: |
-          export UID && docker run --rm -u=$UID:$UID -v $(pwd):/data phpdoc/phpdoc:3
+          docker run --rm -v $(pwd):/data phpdoc/phpdoc:3
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v5
