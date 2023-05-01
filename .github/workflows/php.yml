@@ -68,6 +68,10 @@ jobs:
         base: main
         commit-message: "cov: update"
         delete-branch: true
+        title: "auto: cov build"
+        message: |
+          Generated code coverage reports via phpdoc on merge
+        labels: "auto,auto-cov"
 
     - name: Merge Pull Request
       uses: juliangruber/merge-pull-request-action@v1
