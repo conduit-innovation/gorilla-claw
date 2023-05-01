@@ -26,6 +26,10 @@ jobs:
           base: main
           commit-message: "docs: update"
           delete-branch: true
+          title: "auto: docs build"
+          message: |
+            Generated documentation via phpdoc on merge
+          labels: "auto,auto-doc"
       - name: Merge Pull Request
         uses: juliangruber/merge-pull-request-action@v1
         with:
