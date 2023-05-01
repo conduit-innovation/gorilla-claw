@@ -1,8 +1,8 @@
-<?php namespace MonkeyHook\Test;
+<?php namespace GorillaClaw\Test;
 
 use PHPUnit\Framework\TestCase;
-use MonkeyHook\HookProxy;
-use MonkeyHook\Mock\MockClass;
+use GorillaClaw\HookProxy;
+use GorillaClaw\Mock\MockClass;
 
 final class HookProxyTest extends TestCase {
     public function testCallback() {

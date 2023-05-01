@@ -1,6 +1,6 @@
-# MonkeyHook
-![Build](https://img.shields.io/github/actions/workflow/status/conduit-innovation/monkey-hook/php.yml?style=flat)
-![Coverage](https://raw.githubusercontent.com/conduit-innovation/monkey-hook/image-data/coverage.svg)
+# GorillaClaw
+![Build](https://img.shields.io/github/actions/workflow/status/conduit-innovation/gorilla-claw/php.yml?style=flat)
+![Coverage](https://raw.githubusercontent.com/conduit-innovation/gorilla-claw/image-data/coverage.svg)
 
 WordPress action / filter runtime toolkit library, with monkey-patching capabilities.
 
@@ -20,15 +20,15 @@ The intention is that this library will be safe to use in production, with minim
 Via `composer`:
 
 ```bash
-composer require conduit/monkey-hook
+composer require conduit/gorilla-claw
 ```
 ## What is this?
 
-MonkeyHook is a runtime toolkit library for manipulating WordPress hooks; aka. actions and filters. It's intended to help end-user developers make plugins work with each other when conflicting or misbehaving.
+GorillaClaw is a runtime toolkit library for manipulating WordPress hooks; aka. actions and filters. It's intended to help end-user developers make plugins work with each other when conflicting or misbehaving.
 
 It should not be used as a component in a distributed WordPress plugin, use the normal WordPress Hook API for that. It also isn't intended as a 'new sparkly hook wrapper', that nobody needs or wants.
 
-A unique feature of MonkeyHook is that it automatically binds your hook handlers to existing (and previously uncontrollable) objects that may lay nestled in another plugin's code, by monkey-patching scope. It even breaks into `private` and `protected` properties, and it also allows you to call any method, with _likely disasterous consequences_.
+A unique feature of GorillaClaw is that it automatically binds your hook handlers to existing (and previously uncontrollable) objects that may lay nestled in another plugin's code, by monkey-patching scope. It even breaks into `private` and `protected` properties, and it also allows you to call any method, with _likely disasterous consequences_.
 
 > :warning: **Here start the warnings. They're deliberately peppered throughout.**
 
@@ -36,7 +36,7 @@ A unique feature of MonkeyHook is that it automatically binds your hook handlers
 
 As well as the dangerous features, the library contains some useful functionality for locating handlers and replacing or removing them (safely).
 
-**MonkeyHook can be used for good. It can also be used for evil.**
+**GorillaClaw can be used for good. It can also be used for evil.**
 
 ## Locating
 
@@ -44,11 +44,11 @@ As well as the dangerous features, the library contains some useful functionalit
 
 Find handlers using a number of  different queries. Easily locate specific classes of handler.
 
-`find_filters()` returns a collection of `Hook`s, which is the basis for all hook manipulation in MonkeyHook.
+`find_filters()` returns a collection of `Hook`s, which is the basis for all hook manipulation in GorillaClaw.
 
 ```php
-use function MonkeyHook\find_filters;
-use function MonkeyHook\find_actions;
+use function GorillaClaw\find_filters;
+use function GorillaClaw\find_actions;
 
 /* Find all handlers for `your_action` */
 $hooks = find_filters('your_action');
@@ -89,7 +89,7 @@ $hooks[2]->remove();
 Un-hook / remove handlers found with `find_*****s()`. Safe and simple.
 
 ```php
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 $hooks = find_filters('your_action');
 
@@ -107,7 +107,7 @@ $hooks[0]->remove();
 OK, here's where it starts to get sketchy. We can `replace` handlers with our own closures, but magically, `$this` will be proxied to the original object. We can even read *and write* protected or private properties, and call methods similarly.
 
 ```php
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 /* Our dummy class for the examples below: */
 
@@ -142,7 +142,7 @@ $hooks->replace(function($input, $any, $other, $args) {
 
 Lots of headaches will most likely occur if you change the class state in some way. Although in extreme cases, this is desired. **If you can in anyway avoid doing this, avoid it.**
 
-The actual mechanism of doing this is [quite unusual](https://github.com/conduit-innovation/monkey-hook/blob/624ec24906777341156b026dc100788622d3f42c/src/class/HookProxy.php#L34-L45), using `Closure` and scope binding and passing by reference. No slow `Reflection` is used.
+The actual mechanism of doing this is [quite unusual](https://github.com/conduit-innovation/gorilla-claw/blob/624ec24906777341156b026dc100788622d3f42c/src/class/HookProxy.php#L34-L45), using `Closure` and scope binding and passing by reference. No slow `Reflection` is used.
 
 ## Rebinding
 
@@ -151,7 +151,7 @@ The actual mechanism of doing this is [quite unusual](https://github.com/conduit
 Rebinding is similar to replacement, except the original filter handler is left active. This allows us to 'tap-in' to an existing filter handler's `$this` and scope.
 
 ```php
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 $hooks = find_filters('your_action');
 
@@ -189,7 +189,7 @@ Most of the time, if we want a function to run before an existing handler, we ju
 Both before and after callbacks are optional, and feed through their arguments and return values in the usual chained WordPress way.
 
 ```php
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 $hooks = find_filters('your_action');
 
@@ -209,8 +209,8 @@ $hooks->inject(function($input) {
 There is also a simple wrapper around `add_filter()` and `add_action()` - plural versions allowing handlers to be added to multiple actions / filters in one line. It's just syntactic sugar.
 
 ```php
-use function MonkeyHook\add_filters;
-use function MonkeyHook\add_actions;
+use function GorillaClaw\add_filters;
+use function GorillaClaw\add_actions;
 
 add_filters('filter_1 filter_2', 'some_function', 10, 2);
 add_filters(['filter_1', 'filter_2'], 'some_function', 10, 2);

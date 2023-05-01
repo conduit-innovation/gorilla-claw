@@ -1,6 +1,6 @@
 <?php
 
-namespace MonkeyHook\Mock;
+namespace GorillaClaw\Mock;
 
 class MockClass {
 

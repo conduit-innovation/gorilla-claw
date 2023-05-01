@@ -1,6 +1,6 @@
 <?php
 
-namespace MonkeyHook;
+namespace GorillaClaw;
 
 /**
  * find_actions

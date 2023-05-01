@@ -1,4 +1,4 @@
-<?php namespace MonkeyHook;
+<?php namespace GorillaClaw;
 
 class HookCollection implements \ArrayAccess, \Countable, \Iterator {
     protected array $wp_filter;

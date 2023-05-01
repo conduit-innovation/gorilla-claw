@@ -1,12 +1,12 @@
 <?php
 
-namespace MonkeyHook\Test;
+namespace GorillaClaw\Test;
 
-use MonkeyHook\Types\WPFilterTestCase;
-use MonkeyHook\Hook;
-use MonkeyHook\Mock\MockClass;
+use GorillaClaw\Types\WPFilterTestCase;
+use GorillaClaw\Hook;
+use GorillaClaw\Mock\MockClass;
 
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 final class HookTest extends WPFilterTestCase {
 
@@ -27,7 +27,7 @@ final class HookTest extends WPFilterTestCase {
         $test_object = new MockClass();
         add_filter('test_replace', [$test_object, 'get_id']);
 
-        $hooks = find_filters('test_replace', ['MonkeyHook\Mock\MockClass', 'get_id']);
+        $hooks = find_filters('test_replace', ['GorillaClaw\Mock\MockClass', 'get_id']);
         $this->assertEquals(true, $hooks->exists());
     }
 
@@ -35,7 +35,7 @@ final class HookTest extends WPFilterTestCase {
         $test_object = new MockClass();
         add_filter('test_replace', [$test_object, 'get_id']);
 
-        $hooks = find_filters('test_replace', ['MonkeyHook\Mock\MockClass', 'get_id']);
+        $hooks = find_filters('test_replace', ['GorillaClaw\Mock\MockClass', 'get_id']);
 
         $hooks->replace(function($input) {
             $this->{'id'} = 2; // Equivalent to $this->id, but linter complains otherwise
@@ -48,16 +48,16 @@ final class HookTest extends WPFilterTestCase {
 
     public function testHookReplaceStatic() {
 
-        add_filter('test_1', ['MonkeyHook\Mock\MockClass', 'test_static']);
+        add_filter('test_1', ['GorillaClaw\Mock\MockClass', 'test_static']);
         MockClass::register_with_static('test_1');
 
-        $hook = find_filters('test_1', 'MonkeyHook\Mock\MockClass::test_static');
+        $hook = find_filters('test_1', 'GorillaClaw\Mock\MockClass::test_static');
         
         $hook->replace(function($input) {
             return MockClass::$static_prop;
         });
 
-        $this->assertSame('MonkeyHook\Mock\MockClass', $hook[0]->that);
+        $this->assertSame('GorillaClaw\Mock\MockClass', $hook[0]->that);
 
         $this->assertSame('static', apply_filters('test_1', 'input'));
     }
