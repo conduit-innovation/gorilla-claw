@@ -14,15 +14,6 @@ jobs:
       - name: Run phpdoc
         run: |
           docker run --rm -v $(pwd):/data phpdoc/phpdoc:3
-      - name: Commit docs
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email ""
-          git checkout -b docs/main
-          git add docs/api
-          git reset docs/api/.cache
-          git commit -m "phpdoc: update build" || echo "No changes to commit"
-          git push --set-upstream origin docs/main
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
