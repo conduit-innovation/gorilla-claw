@@ -70,12 +70,12 @@ jobs:
         git push --set-upstream origin cov/main
 
     - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: cov/main
-          base: main
-          commit-message: "cov: update"
-          delete-branch: true
+      uses: peter-evans/create-pull-request@v5
+      with:
+        branch: cov/main
+        base: main
+        commit-message: "cov: update"
+        delete-branch: true
     - name: 'Merge doc pull request'
       uses: kalgurn/merge-pr-action@1.0.0
       with:
