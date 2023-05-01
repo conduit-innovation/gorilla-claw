@@ -1,6 +1,9 @@
 # GorillaClaw
 ![Build](https://img.shields.io/github/actions/workflow/status/conduit-innovation/gorilla-claw/php.yml?style=flat)
-![Coverage](https://raw.githubusercontent.com/conduit-innovation/gorilla-claw/image-data/coverage.svg)
+[![Coverage](https://raw.githubusercontent.com/conduit-innovation/gorilla-claw/image-data/coverage.svg)](https://conduit-innovation.github.io/gorilla-claw/coverage)
+[![API Doc](https://img.shields.io/badge/api--docs-incomplete-yellow)](https://conduit-innovation.github.io/gorilla-claw/api)
+![Packagist PHP Version](https://img.shields.io/packagist/dependency-v/conduit/gorilla-claw/php)
+![Wordpress Compatibility](https://img.shields.io/badge/wordpress->=5.9-blue)
 
 WordPress action / filter runtime toolkit library, with monkey-patching capabilities.
 
@@ -13,7 +16,7 @@ WordPress action / filter runtime toolkit library, with monkey-patching capabili
 - Uses fast Closures, not slow Reflection.
 - *[Coming Soon] Profile individual handlers, or the entire hook*
 
-The intention is that this library will be safe to use in production, with minimal performance overhead. However, until the `1.0.0` release, this should only be used for testing. But there is already full test coverage for releases.
+The intention is that this library will be safe to use in production, with minimal performance overhead. However, until the `1.0.0` release, this should only be used for testing. But there is already [full test coverage for releases](https://conduit-innovation.github.io/gorilla-claw/coverage).
 
 ## Installation
 
