@@ -13,7 +13,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\GorillaClaw\\Hook\u003A\u003Aremove\u0028\u0029",
             "name": "remove",
-            "summary": "remove",
+            "summary": "Remove\u0020and\u0020un\u002Dhook\u0020the\u0020handler",
             "url": "classes/GorillaClaw-Hook.html#method_remove"
         },                {
             "fqsen": "\\GorillaClaw\\Hook\u003A\u003Areplace\u0028\u0029",
