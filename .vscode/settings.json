@@ -9,5 +9,6 @@
         "coverage.cobertura.xml"
     ],
     "coverage-gutters.coverageReportFileName": "coverage/dashboard.html",
-    "esbonio.sphinx.confDir": ""
+    "esbonio.sphinx.confDir": "",
+    "phpunit-test-workbench.phpunit.testDirectory": "unit/tests"
 }
