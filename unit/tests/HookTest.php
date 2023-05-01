@@ -8,6 +8,8 @@ use GorillaClaw\Mock\MockClass;
 
 use function GorillaClaw\find_filters;
 
+function dummy_func($input) { return $input; }
+
 final class HookTest extends WPFilterTestCase {
 
     protected function setUp(): void {
@@ -159,6 +161,40 @@ final class HookTest extends WPFilterTestCase {
         });
 
         $this->assertEquals('test-before-obj', apply_filters('test_inject_3', 'test'));
+    }
+
+    public function testHookBeforeAfterNoBinding() {
+        $test_object = new MockClass();
+
+        add_filter('test_inject', function($input) { return $input; }, 10);
+        
+        $hooks = find_filters('test_inject');
+
+        $hooks->inject(function($input) {
+            return $input . '-before';
+        }, function($input) {
+            return $input . '-after';
+        });
+
+        $this->assertEquals('test-before-after', apply_filters('test_inject', 'test'));
+
+    }
+
+    public function testHookBeforeAfterNoBindingPlain() {
+        $test_object = new MockClass();
+
+        add_filter('test_inject', __NAMESPACE__. '\dummy_func', 10);
+        
+        $hooks = find_filters('test_inject');
+
+        $hooks->inject(function($input) {
+            return $input . '-before';
+        }, function($input) {
+            return $input . '-after';
+        });
+
+        $this->assertEquals('test-before-after', apply_filters('test_inject', 'test'));
+
     }
 
     public function testTolerateBrokenWpFilter() {
