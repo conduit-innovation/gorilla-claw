@@ -206,6 +206,11 @@ Search.appendIndex(
             "summary": "add_filters",
             "url": "namespaces/gorillaclaw.html#function_add_filters"
         },                {
+            "fqsen": "\\GorillaClaw\\_is_callable_object\u0028\u0029",
+            "name": "_is_callable_object",
+            "summary": "_is_callable_object",
+            "url": "namespaces/gorillaclaw.html#function__is_callable_object"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
