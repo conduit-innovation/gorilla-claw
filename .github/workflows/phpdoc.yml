@@ -30,3 +30,11 @@ jobs:
           base: main
           commit-message: "docs: update"
           delete-branch: true
+      - name: 'Merge doc pull request'
+        uses: kalgurn/merge-pr-action@1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: "conduit-innovation"
+          repo: "gorilla-claw"
+          pull_number: ${{ steps.cpr.outputs.pull-request-number }}
+      
