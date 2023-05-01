@@ -19,15 +19,14 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email ""
           git checkout -b docs/main
-          git push --set-upstream origin docs/main
           git add docs/api -f
           git reset docs/api/.cache
           git commit -m "phpdoc: update build" || echo "No changes to commit"
-          git push
-          git checkout -b origin/main
+          git push --set-upstream origin docs/main
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           branch: docs/main
+          base: main
           commit-message: "docs: update"
           delete-branch: true
