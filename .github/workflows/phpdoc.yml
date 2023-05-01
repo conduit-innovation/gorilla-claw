@@ -27,7 +27,7 @@ jobs:
           commit-message: "docs: update"
           delete-branch: true
           title: "auto: docs build"
-          message: |
+          body: |
             Generated documentation via phpdoc on merge
           labels: "auto,auto-doc"
       - name: Merge Pull Request

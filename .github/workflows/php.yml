@@ -69,7 +69,7 @@ jobs:
         commit-message: "cov: update"
         delete-branch: true
         title: "auto: cov build"
-        message: |
+        body: |
           Generated code coverage reports via phpdoc on merge
         labels: "auto,auto-cov"
 
