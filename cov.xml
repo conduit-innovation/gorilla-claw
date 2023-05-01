@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1682942756">
-  <project timestamp="1682942756">
+<coverage generated="1682942897">
+  <project timestamp="1682942897">
     <file name="/home/runner/work/gorilla-claw/gorilla-claw/src/class/Hook.php">
       <class name="GorillaClaw\Hook" namespace="global">
         <metrics complexity="19" methods="5" coveredmethods="5" conditionals="30" coveredconditionals="30" statements="39" coveredstatements="39" elements="74" coveredelements="74"/>
