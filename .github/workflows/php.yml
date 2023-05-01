@@ -64,7 +64,7 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email ""
         git add docs/coverage -f
-        git add docs/cov.xml -f
+        git add cov.xml -f
         git commit -m "cov: update report" || echo "No changes to commit"
         git push
 
