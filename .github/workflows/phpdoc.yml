@@ -18,6 +18,13 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email ""
+          git checkout -b docs/main
           git add docs/api -f
           git commit -m "phpdoc: update build" || echo "No changes to commit"
           git push
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: docs/main
+          commit-message: "docs: update"
+          delete-branch: true
