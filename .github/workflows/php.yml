@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   test:
@@ -66,7 +67,7 @@ jobs:
         base: main
         commit-message: "cov: update"
         delete-branch: true
-        
+
     - name: 'Merge doc pull request'
       uses: kalgurn/merge-pr-action@1.0.0
       with:
