@@ -63,10 +63,26 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email ""
+        git checkout -b cov/main
         git add docs/coverage -f
         git add cov.xml -f
         git commit -m "cov: update report" || echo "No changes to commit"
-        git push
+        git push --set-upstream origin cov/main
+
+    - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: cov/main
+          base: main
+          commit-message: "cov: update"
+          delete-branch: true
+    - name: 'Merge doc pull request'
+      uses: kalgurn/merge-pr-action@1.0.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        owner: "conduit-innovation"
+        repo: "gorilla-claw"
+        pull_number: ${{ steps.cpr.outputs.pull-request-number }}
 
     - name: Make code coverage badge
       uses: timkrase/phpunit-coverage-badge@v1.2.1
