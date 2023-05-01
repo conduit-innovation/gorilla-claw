@@ -42,9 +42,9 @@ class Hook
     }
     
     /**
-     * remove
+     * Remove and un-hook the handler
      *
-     * @return bool
+     * @return bool `true` on success
      */
     
     public function remove(): bool
@@ -56,7 +56,7 @@ class Hook
      * replace
      *
      * @param  mixed $callback
-     * @return bool
+     * @return bool 
      */
     
     public function replace(callable $callback): bool
