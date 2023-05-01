@@ -28,10 +28,10 @@
     "autoload-dev": {
         "psr-4": {
             "GorillaClaw\\Tests\\": "unit/tests/"  ,
-            "GorillaClaw\\Types\\": "unit/tests/types/",
-            "GorillaClaw\\Mock\\": "unit/tests/mock/"            
+            "GorillaClaw\\Types\\": "unit/types/",
+            "GorillaClaw\\Mock\\": "unit/mock/"            
         },
-        "files": ["unit/tests/mock/wordpress/plugin.php", "src/inc/API.php"]
+        "files": ["unit/mock/wordpress/plugin.php", "src/inc/API.php"]
     },
     "scripts": {
         "test": "./vendor/bin/phpunit --no-coverage",
