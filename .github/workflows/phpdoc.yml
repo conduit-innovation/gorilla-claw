@@ -21,6 +21,7 @@ jobs:
           git checkout -b docs/main
           git push --set-upstream origin docs/main
           git add docs/api -f
+          git reset docs/api/.cache
           git commit -m "phpdoc: update build" || echo "No changes to commit"
           git push
           git checkout origin/main
