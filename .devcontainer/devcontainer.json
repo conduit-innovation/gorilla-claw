@@ -12,7 +12,20 @@
 	// "customizations": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [8080]
+	"forwardPorts": [
+		8080
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bierner.markdown-preview-github-styles",
+				"xdebug.php-debug",
+				"ryanluker.vscode-coverage-gutters",
+				"chiefmyron.phpunit-test-workbench",
+				"bmewburn.vscode-intelephense-client"
+			]
+		}
+	}
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"

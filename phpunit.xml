@@ -2,7 +2,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./vendor/autoload.php" colors="true" stopOnFailure="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" cacheDirectory=".phpunit.cache/code-coverage">
 	<testsuites>
 		<testsuite name="Unit Tests">
-			<directory>tests</directory>
+			<directory>unit/tests</directory>
 		</testsuite>
 	</testsuites>
 	<source>
@@ -14,7 +14,7 @@
 	<coverage pathCoverage="true">
 		<report>
             <clover outputFile="cov.xml" />
-			<html outputDirectory="coverage/" />
+			<html outputDirectory="docs/coverage/" />
         </report>
 	</coverage>
 </phpunit>

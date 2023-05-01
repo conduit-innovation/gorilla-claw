@@ -1,0 +1,28 @@
+name: phpDocumentor
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  phpdoc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run phpdoc
+        run: |
+          docker run --rm -v $(pwd):/data phpdoc/phpdoc:3
+          composer run-script coverage
+
+      - name: git commit
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email ""
+          git add docs/api -f
+          git commit -m "phpdoc: update build" || echo "No changes to commit"
+          git add docs/coverage -f
+          git add docs/cov.xml -f
+          git commit -m "cov: update report" || echo "No changes to commit"
+          git push

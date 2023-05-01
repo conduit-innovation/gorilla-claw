@@ -16,7 +16,8 @@
     "require-dev": {
 		"phpunit/phpunit": "10.*",
         "php-stubs/wordpress-stubs": "^6.2",
-        "php-mock/php-mock-mockery": "^1.4"
+        "php-mock/php-mock-mockery": "^1.4",
+        "saggre/phpdocumentor-markdown": "^0.1.3"
     },
     "autoload": {
         "psr-4": {
@@ -26,15 +27,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "GorillaClaw\\Tests\\": "tests/"  ,
-            "GorillaClaw\\Types\\": "tests/types/",
-            "GorillaClaw\\Mock\\": "tests/mock/"            
+            "GorillaClaw\\Tests\\": "unit/tests/"  ,
+            "GorillaClaw\\Types\\": "unit/types/",
+            "GorillaClaw\\Mock\\": "unit/mock/"            
         },
-        "files": ["tests/mock/wordpress/plugin.php", "src/inc/API.php"]
+        "files": ["unit/mock/wordpress/plugin.php", "src/inc/API.php"]
     },
     "scripts": {
         "test": "./vendor/bin/phpunit --no-coverage",
         "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-text",
-        "test-verbose": "./vendor/bin/phpunit --display-deprecations --display-warnings --no-coverage"
+        "doc": "./tools/phpDocumentor",
+        "build-artifacts": "composer run-script coverage && composer run-script doc",
+        "test-verbose": "./vendor/bin/phpunit --display-deprecations --display-warnings --display-notices --no-coverage"
     }	
 }
