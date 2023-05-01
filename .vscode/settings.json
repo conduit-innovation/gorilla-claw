@@ -1,0 +1,13 @@
+{
+    "coverage-gutters.coverageFileNames": [
+
+        "lcov.info",
+        "cov.xml",
+        "coverage.xml",
+        "jacoco.xml",
+        "clover.xml",
+        "coverage.cobertura.xml"
+    ],
+    "coverage-gutters.coverageReportFileName": "coverage/dashboard.html",
+    "esbonio.sphinx.confDir": ""
+}
