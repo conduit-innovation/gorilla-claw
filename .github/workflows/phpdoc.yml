@@ -19,6 +19,7 @@ jobs:
         run: |
           docker run --rm --user= runner -v $(pwd):/data phpdoc/phpdoc:3
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v5
         with:
           branch: docs/main

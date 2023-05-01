@@ -61,6 +61,7 @@ jobs:
       run: composer run-script coverage
 
     - name: Create Pull Request
+      id: cpr
       uses: peter-evans/create-pull-request@v5
       with:
         branch: cov/main
