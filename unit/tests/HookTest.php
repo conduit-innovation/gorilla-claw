@@ -8,6 +8,8 @@ use GorillaClaw\Mock\MockClass;
 
 use function GorillaClaw\find_filters;
 
+function dummy_func($input) { return $input; }
+
 final class HookTest extends WPFilterTestCase {
 
     protected function setUp(): void {
@@ -131,12 +133,14 @@ final class HookTest extends WPFilterTestCase {
         $hooks = find_filters('test_inject');
 
         $hooks->inject(function($input) {
-            return $input . '-before';
+            $this->{'id'} = 1;
+            return $input . '-before-' . $this->{'get_private_id'}();
         }, function($input) {
-            return $input . '-after';
+            $this->{'id'} = 2;
+            return $input . '-after-' . $this->{'get_id'}();
         });
 
-        $this->assertEquals('test-before-obj-after', apply_filters('test_inject', 'test'));
+        $this->assertEquals('test-before-1-obj-after-2', apply_filters('test_inject', 'test'));
 
         add_filter('test_inject_2', [$test_object, 'test'], 10);
         
@@ -157,6 +161,40 @@ final class HookTest extends WPFilterTestCase {
         });
 
         $this->assertEquals('test-before-obj', apply_filters('test_inject_3', 'test'));
+    }
+
+    public function testHookBeforeAfterNoBinding() {
+        $test_object = new MockClass();
+
+        add_filter('test_inject', function($input) { return $input; }, 10);
+        
+        $hooks = find_filters('test_inject');
+
+        $hooks->inject(function($input) {
+            return $input . '-before';
+        }, function($input) {
+            return $input . '-after';
+        });
+
+        $this->assertEquals('test-before-after', apply_filters('test_inject', 'test'));
+
+    }
+
+    public function testHookBeforeAfterNoBindingPlain() {
+        $test_object = new MockClass();
+
+        add_filter('test_inject', __NAMESPACE__. '\dummy_func', 10);
+        
+        $hooks = find_filters('test_inject');
+
+        $hooks->inject(function($input) {
+            return $input . '-before';
+        }, function($input) {
+            return $input . '-after';
+        });
+
+        $this->assertEquals('test-before-after', apply_filters('test_inject', 'test'));
+
     }
 
     public function testTolerateBrokenWpFilter() {

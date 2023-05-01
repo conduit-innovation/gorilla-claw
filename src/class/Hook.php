@@ -110,13 +110,23 @@ class Hook
         $original_callback = &$this->original_callback;
 
         $this->replace(function(...$args) use ($before, $after, $original_callback) {
-            if($before)
-                $args[0] = $before(...$args);
-
+            if($before) {
+                if(_is_callable_object($original_callback)) {
+                    $args[0] = (new HookProxy($before, $original_callback[0]))->__cb(...$args); 
+                } else {
+                    $args[0] = $before(...$args);
+                }
+            }
+                    
             $args[0] = call_user_func_array($original_callback, $args);
             
-            if($after)
-                $args[0] = $after(...$args);
+            if($after) {
+                if(_is_callable_object($original_callback)) {
+                    $args[0] = (new HookProxy($after, $original_callback[0]))->__cb(...$args); 
+                } else {
+                    $args[0] = $after(...$args);
+                }
+            }
 
             return $args[0];
         });

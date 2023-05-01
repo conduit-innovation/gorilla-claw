@@ -60,3 +60,15 @@ function add_filters(string | array $hook_names, $callback, $priority = 10, $acc
         add_filter($hook_name, $callback, $priority, $accepted_args);
     }
 }
+
+/**
+ * _is_callable_object
+ *
+ * @param  mixed $callable
+ * @return void
+ */
+
+function _is_callable_object(callable $callable) {
+    if(is_array($callable) && is_object($callable[0])) return true;
+    return false;
+}
