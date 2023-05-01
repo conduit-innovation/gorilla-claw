@@ -60,13 +60,13 @@ jobs:
       run: composer run-script coverage
     
     - name: Commit coverage report
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email ""
-          git add docs/coverage -f
-          git add docs/cov.xml -f
-          git commit -m "cov: update report" || echo "No changes to commit"
-          git push
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email ""
+        git add docs/coverage -f
+        git add docs/cov.xml -f
+        git commit -m "cov: update report" || echo "No changes to commit"
+        git push
 
     - name: Make code coverage badge
       uses: timkrase/phpunit-coverage-badge@v1.2.1
