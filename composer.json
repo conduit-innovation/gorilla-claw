@@ -1,5 +1,5 @@
 {
-    "name": "conduit/monkey-hook",
+    "name": "conduit/gorilla-claw",
     "description": "Coherent WordPress action / filter hook API, with monkey-patching capabilities.",
     "keywords": ["wordpress", "composer", "filter", "action", "hook"],
     "license": "MIT",
@@ -20,15 +20,15 @@
     },
     "autoload": {
         "psr-4": {
-            "MonkeyHook\\": "src/class"
+            "GorillaClaw\\": "src/class"
         },
         "files": ["src/inc/API.php"]
     },
     "autoload-dev": {
         "psr-4": {
-            "MonkeyHook\\Tests\\": "tests/"  ,
-            "MonkeyHook\\Types\\": "tests/types/",
-            "MonkeyHook\\Mock\\": "tests/mock/"            
+            "GorillaClaw\\Tests\\": "tests/"  ,
+            "GorillaClaw\\Types\\": "tests/types/",
+            "GorillaClaw\\Mock\\": "tests/mock/"            
         },
         "files": ["tests/mock/wordpress/plugin.php", "src/inc/API.php"]
     },

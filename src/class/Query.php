@@ -1,4 +1,4 @@
-<?php namespace MonkeyHook;
+<?php namespace GorillaClaw;
 
 class Query {
     private $wp_filter;

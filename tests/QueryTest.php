@@ -1,13 +1,13 @@
 <?php
 
-namespace MonkeyHook\Test;
+namespace GorillaClaw\Test;
 
-use MonkeyHook\Types\WPFilterTestCase;
-use MonkeyHook\Hook;
-use MonkeyHook\Query;
-use MonkeyHook\Mock\MockClass;
+use GorillaClaw\Types\WPFilterTestCase;
+use GorillaClaw\Hook;
+use GorillaClaw\Query;
+use GorillaClaw\Mock\MockClass;
 
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 final class QueryTest extends WPFilterTestCase {
     protected function setUp(): void {
@@ -33,8 +33,8 @@ final class QueryTest extends WPFilterTestCase {
         add_filter('test', 'test');
         add_filter('test', [$test_object, 'test']);
 
-        add_filter('test', ['MonkeyHook\Mock\MockClass', 'test_static'], 10);
-        add_filter('test', 'MonkeyHook\Mock\MockClass::test_static', 20);
+        add_filter('test', ['GorillaClaw\Mock\MockClass', 'test_static'], 10);
+        add_filter('test', 'GorillaClaw\Mock\MockClass::test_static', 20);
 
         $hooks = find_filters('test');
         $this->assertCount(5, $hooks);
@@ -43,10 +43,10 @@ final class QueryTest extends WPFilterTestCase {
     public function testFindStaticNormalisation() {
         $test_object = new MockClass();
 
-        add_filter('test', ['MonkeyHook\Mock\MockClass', 'test_static'], 10);
-        add_filter('test', 'MonkeyHook\Mock\MockClass::test_static', 20);
+        add_filter('test', ['GorillaClaw\Mock\MockClass', 'test_static'], 10);
+        add_filter('test', 'GorillaClaw\Mock\MockClass::test_static', 20);
 
-        $hooks = find_filters('test', 'MonkeyHook\Mock\MockClass::test_static');
+        $hooks = find_filters('test', 'GorillaClaw\Mock\MockClass::test_static');
         $this->assertCount(2, $hooks);
     }
 
@@ -63,15 +63,15 @@ final class QueryTest extends WPFilterTestCase {
         add_filter('test', [$test_object, 'test']);
         add_filter('test', [$test_object, 'test_1']);
 
-        $hooks = find_filters('test', ['MonkeyHook\Mock\MockClass', false]);
+        $hooks = find_filters('test', ['GorillaClaw\Mock\MockClass', false]);
         $this->assertCount(2, $hooks);
     }
 
     public function testFindAllStaticMethods() {
-        add_filter('test', ['MonkeyHook\Mock\MockClass', 'test_static'], 10);
-        add_filter('test', 'MonkeyHook\Mock\MockClass::test_static', 20);
+        add_filter('test', ['GorillaClaw\Mock\MockClass', 'test_static'], 10);
+        add_filter('test', 'GorillaClaw\Mock\MockClass::test_static', 20);
 
-        $hooks = find_filters('test', 'MonkeyHook\Mock\MockClass::');
+        $hooks = find_filters('test', 'GorillaClaw\Mock\MockClass::');
         $this->assertCount(2, $hooks);
     }
 }

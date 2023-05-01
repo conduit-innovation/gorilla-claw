@@ -1,12 +1,12 @@
 <?php
 
-namespace MonkeyHook\Types;
+namespace GorillaClaw\Types;
 
 use PHPUnit\Framework\TestCase;
-use MonkeyHook\Hook;
-use MonkeyHook\Mock\MockClass;
+use GorillaClaw\Hook;
+use GorillaClaw\Mock\MockClass;
 
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 abstract class WPFilterTestCase extends TestCase {
 

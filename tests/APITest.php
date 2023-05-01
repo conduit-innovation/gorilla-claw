@@ -1,14 +1,14 @@
 <?php
 
-namespace MonkeyHook\Test;
+namespace GorillaClaw\Test;
 
-use MonkeyHook\Types\WPFilterTestCase;
-use MonkeyHook\Mock\MockClass;
+use GorillaClaw\Types\WPFilterTestCase;
+use GorillaClaw\Mock\MockClass;
 
-use function MonkeyHook\find_filters;
-use function MonkeyHook\add_filters;
-use function MonkeyHook\add_actions;
-use function MonkeyHook\find_actions;
+use function GorillaClaw\find_filters;
+use function GorillaClaw\add_filters;
+use function GorillaClaw\add_actions;
+use function GorillaClaw\find_actions;
 
 final class APITest extends WPFilterTestCase {
 
@@ -18,7 +18,7 @@ final class APITest extends WPFilterTestCase {
 
         add_filter('test_1', [$test_object, 'test'], 10, 1);
         add_filter('test_1', $this->test_closure);
-        add_filter('test_1', 'MonkeyHook\Mock\MockClass::test_static_1');
+        add_filter('test_1', 'GorillaClaw\Mock\MockClass::test_static_1');
         MockClass::register_with_static('test_1');
         
         add_filter('test_2', [$test_object, 'test'], 10, 1);
@@ -88,21 +88,21 @@ final class APITest extends WPFilterTestCase {
     }
 
     public function testFindHookByObjectMethod() {
-        $hooks = find_filters('test_1', ['MonkeyHook\Mock\MockClass', 'test']);
+        $hooks = find_filters('test_1', ['GorillaClaw\Mock\MockClass', 'test']);
         $this->assertCount(1, $hooks);
         $this->assertSame('test_1', $hooks[0]->hook_name);
     }
 
     public function testFindHookByStaticMethod() {
-        $hooks = find_filters('test_1', 'MonkeyHook\Mock\MockClass::test_static_1');
+        $hooks = find_filters('test_1', 'GorillaClaw\Mock\MockClass::test_static_1');
         $this->assertCount(1, $hooks);
-        $this->assertSame('MonkeyHook\Mock\MockClass', $hooks[0]->that);
+        $this->assertSame('GorillaClaw\Mock\MockClass', $hooks[0]->that);
     }
 
     public function testFindHookByStaticMethodRegisteredWithString() {
-        $hooks = find_filters('test_1', 'MonkeyHook\Mock\MockClass::test_static_1');
+        $hooks = find_filters('test_1', 'GorillaClaw\Mock\MockClass::test_static_1');
         $this->assertCount(1, $hooks);
-        $this->assertSame('MonkeyHook\Mock\MockClass', $hooks[0]->that);
+        $this->assertSame('GorillaClaw\Mock\MockClass', $hooks[0]->that);
     }
 
     public function testFindHookNotFound() {

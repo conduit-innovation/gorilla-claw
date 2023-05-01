@@ -1,10 +1,10 @@
-<?php namespace MonkeyHook\Test;
+<?php namespace GorillaClaw\Test;
 
-use MonkeyHook\Types\WPFilterTestCase;
-use MonkeyHook\HookCollection;
-use MonkeyHook\Hook;
+use GorillaClaw\Types\WPFilterTestCase;
+use GorillaClaw\HookCollection;
+use GorillaClaw\Hook;
 
-use function MonkeyHook\find_filters;
+use function GorillaClaw\find_filters;
 
 final class HookCollectionTest extends WPFilterTestCase {
     public function testArrayAccessIterable() {
@@ -32,7 +32,7 @@ final class HookCollectionTest extends WPFilterTestCase {
         foreach($collection as $index => $hook) {
 
             /**
-             * @var MonkeyHook\Hook $hook
+             * @var GorillaClaw\Hook $hook
              */
 
             if($index === 0)

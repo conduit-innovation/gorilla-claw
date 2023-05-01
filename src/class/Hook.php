@@ -1,6 +1,6 @@
 <?php
 
-namespace MonkeyHook;
+namespace GorillaClaw;
 
 class Hook
 {
