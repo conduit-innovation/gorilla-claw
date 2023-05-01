@@ -22,7 +22,4 @@ jobs:
           git config user.email ""
           git add docs/api -f
           git commit -m "phpdoc: update build" || echo "No changes to commit"
-          git add docs/coverage -f
-          git add docs/cov.xml -f
-          git commit -m "cov: update report" || echo "No changes to commit"
           git push
