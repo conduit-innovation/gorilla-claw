@@ -19,7 +19,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email ""
           git checkout -b docs/main
-          git add docs/api -f
+          git add docs/api
           git reset docs/api/.cache
           git commit -m "phpdoc: update build" || echo "No changes to commit"
           git push --set-upstream origin docs/main
