@@ -131,12 +131,14 @@ final class HookTest extends WPFilterTestCase {
         $hooks = find_filters('test_inject');
 
         $hooks->inject(function($input) {
-            return $input . '-before';
+            $this->{'id'} = 1;
+            return $input . '-before-' . $this->{'get_private_id'}();
         }, function($input) {
-            return $input . '-after';
+            $this->{'id'} = 2;
+            return $input . '-after-' . $this->{'get_id'}();
         });
 
-        $this->assertEquals('test-before-obj-after', apply_filters('test_inject', 'test'));
+        $this->assertEquals('test-before-1-obj-after-2', apply_filters('test_inject', 'test'));
 
         add_filter('test_inject_2', [$test_object, 'test'], 10);
         
