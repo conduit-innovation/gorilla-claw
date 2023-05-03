@@ -131,4 +131,27 @@ class Hook
             return $args[0];
         });
     }
+
+    public function intercept($on_get = false, $on_call = false, $on_set = false): bool
+    {
+        global $wp_filter;
+        if (
+            isset($wp_filter[$this->hook_name]) &&
+            isset($wp_filter[$this->hook_name]->callbacks[$this->priority]) &&
+            isset($wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key])
+        ) {
+
+            if (!is_null($this->that) && is_object($this->that)) {
+                // $this rebinding
+                $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'][0] = (new ObjectInterceptor($wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'][0], $on_get, $on_call, $on_set));
+                
+                $this->callback['function'][0] = $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'][0];
+                return true;
+            } 
+            
+            
+        }
+
+        return false;
+    }
 }

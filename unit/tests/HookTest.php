@@ -48,6 +48,21 @@ final class HookTest extends WPFilterTestCase {
         $this->assertEquals(2, $test_object->id);
     }
 
+    public function testHookInterceptCall() {
+        $test_object = new MockClass();
+        add_filter('test_intercept', [$test_object, 'get_id']);
+
+        $hooks = find_filters('test_intercept', ['GorillaClaw\Mock\MockClass', 'get_id']);
+
+        $hooks->intercept(false, function($method, $args) {
+            if($method === 'get_id') {
+                return 5;
+            }
+        }, false);
+
+        $this->assertEquals(5, apply_filters('test_intercept', 0));
+    }
+
     public function testHookReplaceStatic() {
 
         add_filter('test_1', ['GorillaClaw\Mock\MockClass', 'test_static']);
