@@ -8,7 +8,7 @@ class ObjectInterceptor extends HookProxy {
     function __construct(&$that, $on_get = false, $on_call = false, $on_set = false) {
         
         $this->___proxy = &$that; // Keep a reference alive to object, to stop GC eating it up
-        $this->__that = $that;
+        $this->___that = $that;
 
         $this->___evts = [];
         
@@ -45,7 +45,7 @@ class ObjectInterceptor extends HookProxy {
     }
 
     private function ___trigger($evt, $prop, $args = null) {
-        if($this->___evts[$evt]) 
+        if(isset($this->___evts[$evt])) 
             return $this->___evts[$evt]($prop, $args);
         
         return null;

@@ -15,7 +15,7 @@ final class HookProxyTest extends TestCase {
 
         $proxy = new HookProxy($cb, $obj);
 
-        $this->assertEquals('ok', $proxy->__cb());
+        $this->assertEquals('ok', $proxy->___cb());
     }
 
     public function testCallbackPassthrough() {
@@ -28,7 +28,7 @@ final class HookProxyTest extends TestCase {
 
         $proxy = new HookProxy($cb, $obj);
 
-        $this->assertEquals('OK', $proxy->__cb('ok'));
+        $this->assertEquals('OK', $proxy->___cb('ok'));
     }
 
     public function testThisAccess() {
@@ -42,8 +42,8 @@ final class HookProxyTest extends TestCase {
 
         $proxy = new HookProxy($cb, $obj);
 
-        $this->assertEquals('id-2', $proxy->__cb('id'));
-        $this->assertEquals('id-3', $proxy->__cb('id'));
+        $this->assertEquals('id-2', $proxy->___cb('id'));
+        $this->assertEquals('id-3', $proxy->___cb('id'));
     }
 
     public function testThisCall() {
@@ -56,7 +56,7 @@ final class HookProxyTest extends TestCase {
 
         $proxy = new HookProxy($cb, $obj);
 
-        $this->assertEquals('this-obj', $proxy->__cb('this'));
+        $this->assertEquals('this-obj', $proxy->___cb('this'));
     }
 
     public function testStaticCall() {
@@ -69,7 +69,7 @@ final class HookProxyTest extends TestCase {
 
         $proxy = new HookProxy($cb, $obj);
 
-        $this->assertEquals('this-static', $proxy->__cb('this'));
+        $this->assertEquals('this-static', $proxy->___cb('this'));
     }
 
     public function testPrivateThisCall() {
@@ -82,7 +82,7 @@ final class HookProxyTest extends TestCase {
 
         $proxy = new HookProxy($cb, $obj);
 
-        $this->assertEquals('id-1', $proxy->__cb('id'));
+        $this->assertEquals('id-1', $proxy->___cb('id'));
     }
 
     public function testPrivateThisMethodCall() {
@@ -95,6 +95,6 @@ final class HookProxyTest extends TestCase {
 
         $proxy = new HookProxy($cb, $obj);
 
-        $this->assertEquals('id-1', $proxy->__cb('id'));
+        $this->assertEquals('id-1', $proxy->___cb('id'));
     }
 }

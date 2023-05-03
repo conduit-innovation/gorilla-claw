@@ -70,7 +70,7 @@ class Hook
 
             if (!is_null($this->that) && is_object($this->that)) {
                 // $this rebinding
-                $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] = (new HookProxy($callback, $this->that))->__cb;
+                $wp_filter[$this->hook_name]->callbacks[$this->priority][$this->function_key]['function'] = (new HookProxy($callback, $this->that))->___cb;
                 $this->callback['function'] = [&$this->that, $callback];
             } elseif (!is_null($this->that) && is_string($this->that)) {
                 // Static binding
@@ -103,7 +103,7 @@ class Hook
             throw new \ErrorException('Cannot rebind from a non-object hook');
         }
 
-        add_filter($hook_name, (new HookProxy($callback, $this->that))->__cb, $priority, $accepted_args);
+        add_filter($hook_name, (new HookProxy($callback, $this->that))->___cb, $priority, $accepted_args);
     }
 
     public function inject($before, $after = false) {
@@ -112,7 +112,7 @@ class Hook
         $this->replace(function(...$args) use ($before, $after, $original_callback) {
             if($before) {
                 if(_is_callable_object($original_callback)) {
-                    $args[0] = (new HookProxy($before, $original_callback[0]))->__cb(...$args); 
+                    $args[0] = (new HookProxy($before, $original_callback[0]))->___cb(...$args); 
                 } else {
                     $args[0] = $before(...$args);
                 }
@@ -122,7 +122,7 @@ class Hook
             
             if($after) {
                 if(_is_callable_object($original_callback)) {
-                    $args[0] = (new HookProxy($after, $original_callback[0]))->__cb(...$args); 
+                    $args[0] = (new HookProxy($after, $original_callback[0]))->___cb(...$args); 
                 } else {
                     $args[0] = $after(...$args);
                 }
