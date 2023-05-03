@@ -97,4 +97,5 @@ final class HookProxyTest extends TestCase {
 
         $this->assertEquals('id-1', $proxy->___cb('id'));
     }
+        $proxy_2 = new HookProxy(function($input) {return $input . '-proxy_2' . '-' . $this->{'id'};}, $proxy_1);
 }
